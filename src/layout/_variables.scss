@@ -1,0 +1,17 @@
+/* General Colors */
+$border: #bfcbd3;
+$font: #273343;
+$background: #f5f9fa;
+$alarm: #ff6600;
+
+/* List of used predefined screen sizes */
+// How to use => @media only screen and (max-width: setScreenSize(small))
+$breakpoints: (
+  small: 576px,
+  medium: 768px,
+  large: 992px,
+  huge: 1200px,
+);
+@function setScreenSize($breakpoint) {
+  @return map-get($breakpoints, $breakpoint);
+}
