@@ -15,8 +15,8 @@ function Input({ dispatch }) {
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        placeholder="...add item"
       />
-      <button type="submit">send</button>
     </form>
   );
 }

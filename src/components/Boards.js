@@ -5,7 +5,7 @@ import { ACTIONS } from "../reducer/reducer";
 function Boards({ columns, dispatch }) {
   // const [columns, setColumns] = useState(columnsFromBackend);
   // const [columns, dispatch] = useReducer(reducer, columnsFromBackend);
-  console.table(columns);
+
   const onDragEnd = (result, columns) => {
     if (!result.destination) return;
     const { source, destination } = result;
@@ -67,7 +67,7 @@ function Boards({ columns, dispatch }) {
           return (
             <div key={columnId}>
               <h2>{column.name}</h2>
-              <div style={{ margin: 8 }}>
+              <div>
                 <Droppable droppableId={columnId} key={columnId}>
                   {(provided, snapshot) => {
                     return (

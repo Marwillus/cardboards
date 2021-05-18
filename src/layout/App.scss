@@ -2,11 +2,11 @@
 
 .container {
   width: 1200px;
-  @media only screen and (max-width: setScreenSize(large)) {
-    width: 800px;
-  }
   @media only screen and (max-width: setScreenSize(medium)) {
     width: 100%;
+  }
+  @media only screen and (max-width: setScreenSize(large)) {
+    width: 800px;
   }
   margin: auto;
 }
@@ -40,11 +40,30 @@ main {
   }
 }
 
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  form {
+    flex-grow: 1;
+    input {
+      height: 2rem;
+      background: linear-gradient(to right, white 0%, $background 100%);
+      padding: 0.5rem;
+      width: 95%;
+      font-size: 18px;
+      border: none;
+    }
+  }
+}
+
 .board-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
   .board {
-    width: 240px;
+    flex-grow: 1;
+    min-width: 240px;
     padding: 6px;
     min-height: 400px;
     border: 1px solid $border;

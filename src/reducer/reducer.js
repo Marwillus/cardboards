@@ -35,7 +35,6 @@ export function reducer(columns, action) {
         },
       };
     case ACTIONS.SHIFT_SAME_COL:
-      console.log(action.payload.sourceID);
       return {
         ...columns,
         [action.payload.sourceID]: {

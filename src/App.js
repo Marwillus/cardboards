@@ -58,8 +58,10 @@ function App() {
         </div>
       </header>
       <main className="container">
-        <h1 className="week">KW {getWeek()}</h1>
-        <Input dispatch={dispatch} />
+        <div className="board-header">
+          <Input dispatch={dispatch} />
+          <h1 className="week">KW {getWeek()}</h1>
+        </div>
         <Boards
           columns={columns}
           dispatch={dispatch}
