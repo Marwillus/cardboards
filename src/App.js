@@ -4,29 +4,13 @@ import "./layout/App.scss";
 import logo from "./images/logo_pur.png";
 import Boards from "./components/Boards";
 import Input from "./components/Input";
-
-export const ACTIONS = {
-  ADD_TASK: "add-task",
-};
-
-function reducer(tasks, action) {
-  switch (action.type) {
-    case ACTIONS.ADD_TASK:
-      return [...tasks, newTask(value)];
-      default
-  }
-}
-
-function newTask(value) {
-  return;
-}
+import { reducer } from "./reducer/reducer";
 
 const itemsFromBackend = [
   { id: uuid(), content: "First task" },
   { id: uuid(), content: "Second task" },
   { id: uuid(), content: "Third task" },
   { id: uuid(), content: "Fourth task" },
-  { id: uuid(), content: "Fifth task" },
 ];
 
 const columnsFromBackend = {
@@ -49,6 +33,8 @@ const columnsFromBackend = {
 };
 
 function App() {
+  const [columns, dispatch] = useReducer(reducer, columnsFromBackend);
+
   const getWeek = () => {
     var date = new Date();
     var week1 = new Date(date.getFullYear(), 0, 4);
@@ -72,11 +58,12 @@ function App() {
         </div>
       </header>
       <main className="container">
-        <Input />
         <h1 className="week">KW {getWeek()}</h1>
+        <Input dispatch={dispatch} />
         <Boards
-          itemsFromBackend={itemsFromBackend}
-          columnsFromBackend={columnsFromBackend}
+          columns={columns}
+          dispatch={dispatch}
+          // columnsFromBackend={columnsFromBackend}
         />
       </main>
     </div>

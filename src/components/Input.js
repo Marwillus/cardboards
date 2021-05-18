@@ -1,12 +1,12 @@
-import React, { useState, useReducer } from "react";
-import { ACTIONS } from "../App";
+import React, { useState } from "react";
+import { ACTIONS } from "../reducer/reducer";
 
-function Input() {
+function Input({ dispatch }) {
   const [value, setValue] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatchEvent({ type: ACTIONS.ADD_TASK, payload: { name: value } });
+    dispatch({ type: ACTIONS.ADD_TASK, payload: { name: value } });
     setValue("");
   };
   return (
@@ -16,7 +16,7 @@ function Input() {
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
-      <button onClick={""}>send</button>
+      <button type="submit">send</button>
     </form>
   );
 }

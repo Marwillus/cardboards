@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { ACTIONS } from "../reducer/reducer";
 
-function Boards({ itemsFromBackend, columnsFromBackend }) {
-  const [columns, setColumns] = useState(columnsFromBackend);
-
-  const onDragEnd = (result, columns, setColumns) => {
+function Boards({ columns, dispatch }) {
+  // const [columns, setColumns] = useState(columnsFromBackend);
+  // const [columns, dispatch] = useReducer(reducer, columnsFromBackend);
+  console.table(columns);
+  const onDragEnd = (result, columns) => {
     if (!result.destination) return;
     const { source, destination } = result;
 
@@ -15,7 +17,16 @@ function Boards({ itemsFromBackend, columnsFromBackend }) {
       const destItems = [...destColumn.items];
       const [removed] = sourceItems.splice(source.index, 1);
       destItems.splice(destination.index, 0, removed);
-      setColumns({
+      dispatch({
+        type: ACTIONS.SHIFT_DIFF_COL,
+        payload: {
+          sourceID: source.droppableId,
+          destinationID: destination.droppableId,
+          sourceItems: sourceItems,
+          destItems: destItems,
+        },
+      });
+      /* setColumns({
         ...columns,
         [source.droppableId]: {
           ...sourceColumn,
@@ -25,28 +36,33 @@ function Boards({ itemsFromBackend, columnsFromBackend }) {
           ...destColumn,
           items: destItems,
         },
-      });
-      console.log(columns);
+      }); */
     } else {
       const column = columns[source.droppableId];
       const copiedItems = [...column.items];
       const [removed] = copiedItems.splice(source.index, 1);
       copiedItems.splice(destination.index, 0, removed);
-      setColumns({
+      dispatch({
+        type: ACTIONS.SHIFT_SAME_COL,
+        payload: {
+          sourceID: source.droppableId,
+          sourceItems: copiedItems,
+        },
+      });
+
+      /*  setColumns({
         ...columns,
         [source.droppableId]: {
           ...column,
           items: copiedItems,
         },
-      });
+      }); */
     }
   };
 
   return (
     <div className="board-container">
-      <DragDropContext
-        onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
-      >
+      <DragDropContext onDragEnd={(result) => onDragEnd(result, columns)}>
         {Object.entries(columns).map(([columnId, column]) => {
           return (
             <div key={columnId}>
