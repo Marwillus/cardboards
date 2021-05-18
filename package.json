@@ -1,7 +1,10 @@
 {
-  "name": "feedback-board",
+  "name": "drag-n-drop-boards",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "12.18.3"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
