@@ -10,7 +10,7 @@ function Input({ dispatch }) {
     setValue("");
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="task-input">
       <input
         type="text"
         value={value}

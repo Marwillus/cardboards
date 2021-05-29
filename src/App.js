@@ -5,6 +5,7 @@ import logo from "./images/logo_pur.png";
 import Boards from "./components/Boards";
 import Input from "./components/Input";
 import { reducer } from "./reducer/reducer";
+import { AiOutlineUser } from "react-icons/ai";
 
 const itemsFromBackend = [
   { id: uuid(), content: "First task" },
@@ -52,11 +53,15 @@ function App() {
   return (
     <div className="App">
       <header>
-        <div className="container title">
-          <img src={logo} alt="logo" className="logo" />
-          <h3>Task Master</h3>
+        <div className="container header-content">
+          <div className="title">
+            <img src={logo} alt="logo" className="logo" />
+            <h3>Task Master</h3>
+          </div>
+          <AiOutlineUser className="user-btn" />
         </div>
       </header>
+
       <main className="container">
         <div className="board-header">
           <Input dispatch={dispatch} />

@@ -1,11 +1,9 @@
 import React from "react";
+import Item from "./Item";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { ACTIONS } from "../reducer/reducer";
 
 function Boards({ columns, dispatch }) {
-  // const [columns, setColumns] = useState(columnsFromBackend);
-  // const [columns, dispatch] = useReducer(reducer, columnsFromBackend);
-
   const onDragEnd = (result, columns) => {
     if (!result.destination) return;
     const { source, destination } = result;
@@ -26,17 +24,6 @@ function Boards({ columns, dispatch }) {
           destItems: destItems,
         },
       });
-      /* setColumns({
-        ...columns,
-        [source.droppableId]: {
-          ...sourceColumn,
-          items: sourceItems,
-        },
-        [destination.droppableId]: {
-          ...destColumn,
-          items: destItems,
-        },
-      }); */
     } else {
       const column = columns[source.droppableId];
       const copiedItems = [...column.items];
@@ -49,14 +36,6 @@ function Boards({ columns, dispatch }) {
           sourceItems: copiedItems,
         },
       });
-
-      /*  setColumns({
-        ...columns,
-        [source.droppableId]: {
-          ...column,
-          items: copiedItems,
-        },
-      }); */
     }
   };
 
@@ -65,20 +44,20 @@ function Boards({ columns, dispatch }) {
       <DragDropContext onDragEnd={(result) => onDragEnd(result, columns)}>
         {Object.entries(columns).map(([columnId, column]) => {
           return (
-            <div key={columnId}>
+            <div key={columnId} className="board">
               <h2>{column.name}</h2>
               <div>
                 <Droppable droppableId={columnId} key={columnId}>
                   {(provided, snapshot) => {
                     return (
                       <div
+                        className="drop-area"
                         {...provided.droppableProps}
                         ref={provided.innerRef}
-                        className="board"
                         style={{
                           background: snapshot.isDraggingOver
-                            ? "lightblue"
-                            : "#f5f9fa",
+                            ? "#d7f1d7"
+                            : "#ffffff",
                         }}
                       >
                         {column.items.map((item, index) => {
@@ -91,13 +70,14 @@ function Boards({ columns, dispatch }) {
                               {(provided, snapshot) => {
                                 return (
                                   <div
+                                    className="item"
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                     style={{
                                       userSelect: "none",
                                       padding: 16,
-                                      margin: "0 0 8px 0",
+                                      marginBottom: "0.5rem",
                                       minHeight: "50px",
                                       backgroundColor: snapshot.isDragging
                                         ? "#eeeeee"
@@ -105,7 +85,7 @@ function Boards({ columns, dispatch }) {
                                       ...provided.draggableProps.style,
                                     }}
                                   >
-                                    {item.content}
+                                    <Item content={item.content} />
                                   </div>
                                 );
                               }}
