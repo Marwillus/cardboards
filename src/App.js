@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import { v4 as uuid } from "uuid";
 import "./layout/App.scss";
-import Logo from "./images/logo.png";
+import logo from "./images/logo.png";
 import Boards from "./components/Boards";
 import Input from "./components/Input";
 import { reducer } from "./reducer/reducer";
@@ -55,8 +55,7 @@ function App() {
       <header>
         <div className="container header-content">
           <div className="title">
-            <Logo />
-            {/* <img src={logo} alt="logo" className="logo" /> */}
+            <img src={logo} alt="logo" className="logo" />
             <h3>Task Master</h3>
           </div>
           <AiOutlineUser className="user-btn" />
