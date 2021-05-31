@@ -7,6 +7,10 @@ export const ACTIONS = {
   SHIFT_SAME_COL: "shift-to-same-column",
 };
 
+function newTask(value) {
+  return { id: uuid(), content: value, list: 0 };
+}
+
 export function reducer(columns, action) {
   switch (action.type) {
     case ACTIONS.ADD_TASK:
@@ -21,7 +25,13 @@ export function reducer(columns, action) {
         },
       };
     case ACTIONS.DELETE_TASK:
-      return;
+      return {
+        ...columns,
+        [action.payload.sourceID]: {
+          ...columns[action.payload.sourceID],
+          items: action.payload.sourceItems,
+        },
+      };
     case ACTIONS.SHIFT_DIFF_COL:
       return {
         ...columns,
@@ -45,8 +55,4 @@ export function reducer(columns, action) {
     default:
       return columns;
   }
-}
-
-function newTask(value) {
-  return { id: uuid(), content: value, list: 0 };
 }

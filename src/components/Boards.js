@@ -1,5 +1,6 @@
 import React from "react";
 import Item from "./Item";
+import hole from "../images/BlackHole.png";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { ACTIONS } from "../reducer/reducer";
 
@@ -8,7 +9,18 @@ function Boards({ columns, dispatch }) {
     if (!result.destination) return;
     const { source, destination } = result;
 
-    if (source.droppableId !== destination.droppableId) {
+    if (destination.droppableId === "delete-area") {
+      const column = columns[source.droppableId];
+      const copiedItems = [...column.items];
+      copiedItems.splice(source.index, 1);
+      dispatch({
+        type: ACTIONS.DELETE_TASK,
+        payload: {
+          sourceID: source.droppableId,
+          sourceItems: copiedItems,
+        },
+      });
+    } else if (source.droppableId !== destination.droppableId) {
       const sourceColumn = columns[source.droppableId];
       const destColumn = columns[destination.droppableId];
       const sourceItems = [...sourceColumn.items];
@@ -42,7 +54,7 @@ function Boards({ columns, dispatch }) {
   return (
     <div className="board-container">
       <DragDropContext onDragEnd={(result) => onDragEnd(result, columns)}>
-        {Object.entries(columns).map(([columnId, column]) => {
+        {Object.entries(columns).map(([columnId, column], index) => {
           return (
             <div key={columnId} className="board">
               <h2>{column.name}</h2>
@@ -75,10 +87,6 @@ function Boards({ columns, dispatch }) {
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                     style={{
-                                      userSelect: "none",
-                                      padding: 16,
-                                      marginBottom: "0.5rem",
-                                      minHeight: "50px",
                                       backgroundColor: snapshot.isDragging
                                         ? "#eeeeee"
                                         : "white",
@@ -101,6 +109,24 @@ function Boards({ columns, dispatch }) {
             </div>
           );
         })}
+        <Droppable droppableId="delete-area">
+          {(provided, snapshot) => (
+            <img
+              id="delete-area"
+              src={hole}
+              alt="delete"
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              style={{
+                animation:
+                  snapshot.isDraggingOver &&
+                  "rotate reverse infinite 4s linear",
+                height: snapshot.isDraggingOver && "350px",
+                width: snapshot.isDraggingOver && "350px",
+              }}
+            />
+          )}
+        </Droppable>
       </DragDropContext>
     </div>
   );
