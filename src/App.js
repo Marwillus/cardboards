@@ -8,10 +8,11 @@ import { reducer } from "./reducer/reducer";
 import { AiOutlineUser } from "react-icons/ai";
 
 const itemsFromBackend = [
-  { id: uuid(), content: "First task" },
-  { id: uuid(), content: "Second task" },
-  { id: uuid(), content: "Third task" },
-  { id: uuid(), content: "Fourth task" },
+  { id: uuid(), content: "Please visit my new Project" },
+  {
+    id: uuid(),
+    content: <a href="https://sortify-dev.herokuapp.com/">Sortify</a>,
+  },
 ];
 
 const columnsFromBackend = {
